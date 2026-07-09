@@ -677,8 +677,6 @@ async function shareResult(fromPopup) {
 
 }
 
-}
-
 
 function buildShareText() {
 
