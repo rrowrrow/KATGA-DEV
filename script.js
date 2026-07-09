@@ -209,6 +209,7 @@ state.validGuessSet.add(state.answer);
     updateStatsUI();
     queueStartupHelp();
     processPopupQueue();
+    updateDevPanel();
   } catch (err) {
     console.error(err);
     els.statusLabel.textContent = "Error";
@@ -395,6 +396,7 @@ function submitGuess() {
   const evaluation = evaluateGuess(guess, state.answer);
   const attempt = { word: guess, evaluation };
   state.attempts.push(attempt);
+  updateDevPanel();
   paintRow(state.attempts.length - 1, guess, evaluation);
   colorKeyboard();
   state.current = "";
@@ -533,7 +535,8 @@ updateStatsUI();
     ]
   });
 
-
+updateDevPanel();
+  
   processPopupQueue();
 }
 
