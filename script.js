@@ -2,6 +2,7 @@ const STORAGE_KEY = "katga_beta_v1";
 const CONFIG_URL = "./data/config.json";
 const DAILY_PATH = "./data/daily/";
 const WORD_PATH = "./data/";
+const DEV_MODE = location.search.includes("dev=true");
 const state = {
   config: null,
   todayKey: "",
