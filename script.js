@@ -1087,3 +1087,48 @@ function updateDevPanel() {
   `;
 
 }
+
+window.revealAnswer =
+  function () {
+
+    alert(
+      state.answer
+    );
+
+  };
+
+window.resetToday =
+  function () {
+
+    const storage =
+      readStorage();
+
+    delete storage.daily[
+      state.todayKey
+    ];
+
+    saveStorage(storage);
+
+    location.reload();
+
+  };
+
+window.testFirebase =
+  function () {
+
+    saveResultToFirebase();
+
+  };
+
+window.clearName =
+  function () {
+
+    localStorage.removeItem(
+      "katga_name"
+    );
+
+    alert(
+      "Nama dihapus"
+    );
+
+  };
