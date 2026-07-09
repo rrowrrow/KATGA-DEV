@@ -1020,9 +1020,17 @@ async function saveResultToFirebase() {
   timestamp: Date.now()
 }
     );
-  } catch (error) {
-    console.error(error);
-  }
+} catch (error) {
+
+  console.error(
+    "FIREBASE ERROR:",
+    error
+  );
+
+  alert(
+    error?.message || String(error)
+  );
+
 }
 
 function updateDevPanel() {
