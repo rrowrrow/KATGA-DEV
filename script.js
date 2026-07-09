@@ -1079,6 +1079,10 @@ panel.innerHTML = `
   ${window.db ? "✅" : "❌"}
   <br>
 
+  Player:
+${localStorage.getItem("katga_name") || "-"}
+<br>
+
   <button onclick="revealAnswer()">
     Show Answer
   </button>
