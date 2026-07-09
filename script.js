@@ -1083,6 +1083,14 @@ panel.innerHTML = `
 ${localStorage.getItem("katga_name") || "-"}
 <br>
 
+Word Length:
+${state.answer.length}
+<br>
+
+Read Message:
+${state.hasReadMessage ? "✅" : "❌"}
+<br>
+
   <button onclick="revealAnswer()">
     Show Answer
   </button>
@@ -1179,5 +1187,24 @@ window.forceLose =
     state.locked = false;
 
     finishGame(false);
+
+  };
+
+window.forceRead =
+  function () {
+
+    state.hasReadMessage = true;
+
+    els.readerSection.classList.add(
+      "hidden"
+    );
+
+    els.gameSection.classList.remove(
+      "hidden"
+    );
+
+    syncGameState();
+
+    updateDevPanel();
 
   };
