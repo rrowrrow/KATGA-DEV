@@ -1114,6 +1114,10 @@ ${state.hasReadMessage ? "✅" : "❌"}
   <button onclick="clearName()">
     Clear Name
   </button>
+  
+<button onclick="forceRead()">
+  Force Read
+</button>
 
 `;
 
