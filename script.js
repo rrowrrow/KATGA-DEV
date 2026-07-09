@@ -1131,9 +1131,13 @@ window.resetToday =
   };
 
 window.testFirebase =
-  function () {
+  async function () {
 
-    saveResultToFirebase();
+    await saveResultToFirebase();
+
+    alert(
+      "Firebase test selesai"
+    );
 
   };
 
