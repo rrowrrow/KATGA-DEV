@@ -665,15 +665,8 @@ async function shareResult(fromPopup) {
     }
 
   } catch (error) {
-
-  console.error(
-    "FIREBASE ERROR:",
-    error
-  );
-
-  alert(
-    error?.message || String(error)
-  );
+  console.error(error);
+}
 
 }
 
