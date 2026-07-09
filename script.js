@@ -1090,7 +1090,7 @@ function updateDevPanel() {
       Clear Name
     </button>
 
-  `;
+  ;
 
 }
 
