@@ -1053,47 +1053,57 @@ function updateDevPanel() {
     "hidden"
   );
 
-  panel.innerHTML = `
+panel.innerHTML = `
 
-    <strong>KATGA DEV</strong>
+  <strong>KATGA DEV</strong>
 
-    <hr>
+  <hr>
 
-    Date:
-    ${state.todayKey}
-    <br>
+  Date:
+  ${state.todayKey}
+  <br>
 
-    Answer:
-    ${state.answer}
-    <br>
+  Answer:
+  ${state.answer}
+  <br>
 
-    Result:
-    ${state.result}
-    <br>
+  Result:
+  ${state.result}
+  <br>
 
-    Attempts:
-    ${state.attempts.length}
-    <br>
+  Attempts:
+  ${state.attempts.length}
+  <br>
 
-    <button onclick="revealAnswer()">
-      Show Answer
-    </button>
+  Firebase:
+  ${window.db ? "✅" : "❌"}
+  <br>
 
-    <button onclick="resetToday()">
-      Reset Puzzle
-    </button>
+  <button onclick="revealAnswer()">
+    Show Answer
+  </button>
 
-    <button onclick="testFirebase()">
-      Test Firebase
-    </button>
+  <button onclick="forceWin()">
+    Force Win
+  </button>
 
-    <button onclick="clearName()">
-      Clear Name
-    </button>
+  <button onclick="forceLose()">
+    Force Lose
+  </button>
 
- `;
+  <button onclick="resetToday()">
+    Reset Puzzle
+  </button>
 
-}
+  <button onclick="testFirebase()">
+    Test Firebase
+  </button>
+
+  <button onclick="clearName()">
+    Clear Name
+  </button>
+
+`;
 
 window.revealAnswer =
   function () {
@@ -1137,5 +1147,25 @@ window.clearName =
     alert(
       "Nama dihapus"
     );
+
+  };
+
+  window.forceWin =
+  function () {
+
+    state.current =
+      state.answer;
+
+    els.guessInput.value =
+      state.answer;
+
+    submitGuess();
+
+  };
+
+  window.forceLose =
+  function () {
+
+    finishGame(false);
 
   };
