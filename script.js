@@ -1105,6 +1105,8 @@ panel.innerHTML = `
 
 `;
 
+}
+
 window.revealAnswer =
   function () {
 
@@ -1167,8 +1169,10 @@ window.clearName =
 
   };
 
-  window.forceLose =
+window.forceLose =
   function () {
+
+    state.locked = false;
 
     finishGame(false);
 
