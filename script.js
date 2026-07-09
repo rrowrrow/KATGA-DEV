@@ -1024,3 +1024,63 @@ async function saveResultToFirebase() {
   }
 }
 
+function updateDevPanel() {
+
+  if (!DEV_MODE) {
+    return;
+  }
+
+  const panel =
+    document.getElementById(
+      "devPanel"
+    );
+
+  if (!panel) {
+    return;
+  }
+
+  panel.classList.remove(
+    "hidden"
+  );
+
+  panel.innerHTML = `
+
+    <strong>KATGA DEV</strong>
+
+    <hr>
+
+    Date:
+    ${state.todayKey}
+    <br>
+
+    Answer:
+    ${state.answer}
+    <br>
+
+    Result:
+    ${state.result}
+    <br>
+
+    Attempts:
+    ${state.attempts.length}
+    <br>
+
+    <button onclick="revealAnswer()">
+      Show Answer
+    </button>
+
+    <button onclick="resetToday()">
+      Reset Puzzle
+    </button>
+
+    <button onclick="testFirebase()">
+      Test Firebase
+    </button>
+
+    <button onclick="clearName()">
+      Clear Name
+    </button>
+
+  `;
+
+}
