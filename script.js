@@ -965,6 +965,34 @@ function getPlayerName() {
 
 }
 
+function getPlayerUnit() {
+
+  let unit =
+    localStorage.getItem(
+      "katga_unit"
+    );
+
+  if (!unit) {
+
+    unit = prompt(
+      "Masukkan Unit Anda"
+    );
+
+    if (unit) {
+
+      localStorage.setItem(
+        "katga_unit",
+        unit
+      );
+
+    }
+
+  }
+
+  return unit || "Tidak Diketahui";
+
+}
+
 function getPlayerId() {
 
   let playerId =
@@ -1012,6 +1040,7 @@ async function saveResultToFirebase() {
 {
   playerId: getPlayerId(),
   name: playerName,
+  unit: getPlayerUnit(),
   date: state.todayKey,
   result: state.result,
   attempts: state.attempts.length,
@@ -1081,6 +1110,10 @@ panel.innerHTML = `
 
   Player:
 ${localStorage.getItem("katga_name") || "-"}
+<br>
+
+Unit:
+${localStorage.getItem("katga_unit") || "-"}
 <br>
 
 Word Length:
@@ -1169,6 +1202,21 @@ window.clearName =
     alert(
       "Nama dihapus"
     );
+
+  };
+
+window.clearUnit =
+  function () {
+
+    localStorage.removeItem(
+      "katga_unit"
+    );
+
+    alert(
+      "Unit dihapus"
+    );
+
+    updateDevPanel();
 
   };
 
