@@ -1032,6 +1032,7 @@ async function saveResultToFirebase() {
   );
 
 }
+}
 
 function updateDevPanel() {
 
