@@ -664,11 +664,18 @@ async function shareResult(fromPopup) {
 
     }
 
-  } catch (err) {
+  } catch (error) {
 
-    console.error(err);
+  console.error(
+    "FIREBASE ERROR:",
+    error
+  );
 
-  }
+  alert(
+    error?.message || String(error)
+  );
+
+}
 
 }
 
