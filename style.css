@@ -608,22 +608,6 @@ h1 {
 
 }
 
-.dev-panel button {
-
-  width: 100%;
-
-  margin-top: 6px;
-
-}
-.dev-panel button {
-
-  display: block;
-
-  width: 100%;
-
-  margin-top: 6px;
-
-}
 .dev-panel {
 
   display: flex;
@@ -639,8 +623,6 @@ h1 {
   display: block;
 
   width: 100%;
-
-  margin-top: 6px;
 
 }
     
