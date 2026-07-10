@@ -580,7 +580,7 @@ h1 {
     min-height: 30px;
   }
 
-  .dev-panel {
+.dev-panel {
 
   position: fixed;
 
@@ -590,7 +590,7 @@ h1 {
 
   z-index: 9999;
 
-  width: 220px;
+  width: 240px;
 
   background: #10233b;
 
@@ -599,16 +599,6 @@ h1 {
   padding: 12px;
 
   border-radius: 12px;
-
-  font-size: 12px;
-
-  box-shadow: 0 10px 30px rgba(
-    0,0,0,0.3
-  );
-
-}
-
-.dev-panel {
 
   display: flex;
 
@@ -619,8 +609,6 @@ h1 {
 }
 
 .dev-panel button {
-
-  display: block;
 
   width: 100%;
 
