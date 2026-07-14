@@ -29,3 +29,17 @@ body {
   margin-bottom: 12px;
 
 }
+
+.chart-container {
+
+  height: 400px;
+
+  background: white;
+
+  padding: 16px;
+
+  border-radius: 12px;
+
+  margin-top: 16px;
+
+}
