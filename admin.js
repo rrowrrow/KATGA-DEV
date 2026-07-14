@@ -199,6 +199,10 @@ const playerHtml =
 
 ${playerHtml}
 
+<h2>Partisipasi Harian</h2>
+
+${dailyHtml}
+
     `;
 
   } catch (error) {
