@@ -103,3 +103,4 @@ async function loadDashboard() {
   `;
 }
 
+loadDashboard();
