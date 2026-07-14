@@ -26,9 +26,11 @@ const firebaseConfig = {
 
 };
 
-const app = initializeApp(firebaseConfig);
+const app =
+  initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+const db =
+  getFirestore(app);
 
 async function loadDashboard() {
 
@@ -77,43 +79,8 @@ async function loadDashboard() {
         : 0;
 
     const unitStats = {};
-
     const playerStats = {};
-
-const dailyStats = {};
-
-    const chartLabels =
-  Object.keys(dailyStats)
-    .sort();
-
-const chartValues =
-  chartLabels.map(
-    date => dailyStats[date]
-  );
-
-results.forEach(result => {
-
-  const date =
-    result.date || "Tidak Diketahui";
-
-  dailyStats[date] =
-    (dailyStats[date] || 0) + 1;
-
-});
-
-    const dailyHtml =
-  Object.entries(dailyStats)
-    .sort((a, b) =>
-      b[0].localeCompare(a[0])
-    )
-    .map(
-      ([date, count]) => `
-        <div class="card">
-          ${date}: ${count} game
-        </div>
-      `
-    )
-    .join("");
+    const dailyStats = {};
 
     results.forEach(result => {
 
@@ -123,6 +90,24 @@ results.forEach(result => {
 
       unitStats[unit] =
         (unitStats[unit] || 0) + 1;
+
+      const date =
+        result.date ||
+        "Tidak Diketahui";
+
+      dailyStats[date] =
+        (dailyStats[date] || 0) + 1;
+
+      if (result.result === "win") {
+
+        const player =
+          result.name ||
+          "Anonim";
+
+        playerStats[player] =
+          (playerStats[player] || 0) + 1;
+
+      }
 
     });
 
@@ -140,95 +125,65 @@ results.forEach(result => {
         )
         .join("");
 
-    results.forEach(result => {
-
-  if (result.result !== "win") {
-    return;
-  }
-
-  const player =
-    result.name || "Anonim";
-
-  playerStats[player] =
-    (playerStats[player] || 0) + 1;
-
-});
-
     const topUnitHtml =
-  Object.entries(unitStats)
-    .sort(
-      (a, b) => b[1] - a[1]
-    )
-    .slice(0, 10)
-    .map(
-      ([unit, count], index) => `
-        <div class="card">
-          ${index + 1}. ${unit}
-          (${count} game)
-        </div>
-      `
-    )
-    .join("");
-    
+      Object.entries(unitStats)
+        .sort(
+          (a, b) => b[1] - a[1]
+        )
+        .slice(0, 10)
+        .map(
+          ([unit, count], index) => `
+            <div class="card">
+              ${index + 1}. ${unit}
+              (${count} game)
+            </div>
+          `
+        )
+        .join("");
 
-    
-const playerHtml =
-  Object.entries(playerStats)
-    .sort(
-      (a, b) => b[1] - a[1]
-    )
-    .slice(0, 10)
-    .map(
-      ([player, wins], index) => `
-        <div class="card">
-          ${index + 1}. ${player}
-          (${wins} kemenangan)
-        </div>
-      `
-    )
-    .join("");
-    
+    const playerHtml =
+      Object.entries(playerStats)
+        .sort(
+          (a, b) => b[1] - a[1]
+        )
+        .slice(0, 10)
+        .map(
+          ([player, wins], index) => `
+            <div class="card">
+              ${index + 1}. ${player}
+              (${wins} kemenangan)
+            </div>
+          `
+        )
+        .join("");
+
+    const dailyHtml =
+      Object.entries(dailyStats)
+        .sort(
+          (a, b) =>
+            b[0].localeCompare(a[0])
+        )
+        .map(
+          ([date, count]) => `
+            <div class="card">
+              ${date}: ${count} game
+            </div>
+          `
+        )
+        .join("");
+
+    const chartLabels =
+      Object.keys(dailyStats)
+        .sort();
+
+    const chartValues =
+      chartLabels.map(
+        date => dailyStats[date]
+      );
+
     document.getElementById(
       "summary"
     ).innerHTML = `
-
-    new Chart(
-
-  document.getElementById(
-    "dailyChart"
-  ),
-
-  {
-
-    type: "bar",
-
-    data: {
-
-      labels:
-        chartLabels,
-
-      datasets: [
-
-        {
-
-          label:
-            "Jumlah Game",
-
-          data:
-            chartValues,
-
-          backgroundColor:
-            "#00529b"
-
-        }
-
-      ]
-
-    }
-
-  }
-
-);
 
       <div class="card">
         Total Game:
@@ -259,19 +214,61 @@ const playerHtml =
 
       ${unitHtml}
 
-<h2>Top Pemain</h2>
+      <h2>Top Pemain</h2>
 
-${playerHtml}
+      ${playerHtml}
 
-<h2>Partisipasi Harian</h2>
+      <h2>Partisipasi Harian</h2>
 
-${dailyHtml}
+      ${dailyHtml}
 
-<h2>Top Unit</h2>
+      <h2>Top Unit</h2>
 
-${topUnitHtml}
+      ${topUnitHtml}
+
+      <h2>Grafik Partisipasi Harian</h2>
+
+      <canvas id="dailyChart"></canvas>
 
     `;
+
+    new Chart(
+
+      document.getElementById(
+        "dailyChart"
+      ),
+
+      {
+
+        type: "bar",
+
+        data: {
+
+          labels:
+            chartLabels,
+
+          datasets: [
+
+            {
+
+              label:
+                "Jumlah Game",
+
+              data:
+                chartValues,
+
+              backgroundColor:
+                "#00529b"
+
+            }
+
+          ]
+
+        }
+
+      }
+
+    );
 
   } catch (error) {
 
