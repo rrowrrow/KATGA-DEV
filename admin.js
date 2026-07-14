@@ -34,6 +34,26 @@ const db =
 
 async function loadDashboard() {
 
+  console.log("Dashboard mulai");
+
+  const snapshot =
+    await getDocs(
+      collection(
+        db,
+        "results"
+      )
+    );
+
+  console.log(
+    "Jumlah dokumen:",
+    snapshot.size
+  );
+
+  ...
+}
+
+async function loadDashboard() {
+
   const snapshot =
     await getDocs(
       collection(
