@@ -80,6 +80,32 @@ async function loadDashboard() {
 
     const playerStats = {};
 
+const dailyStats = {};
+
+results.forEach(result => {
+
+  const date =
+    result.date || "Tidak Diketahui";
+
+  dailyStats[date] =
+    (dailyStats[date] || 0) + 1;
+
+});
+
+    const dailyHtml =
+  Object.entries(dailyStats)
+    .sort((a, b) =>
+      b[0].localeCompare(a[0])
+    )
+    .map(
+      ([date, count]) => `
+        <div class="card">
+          ${date}: ${count} game
+        </div>
+      `
+    )
+    .join("");
+    
     results.forEach(result => {
 
       const unit =
