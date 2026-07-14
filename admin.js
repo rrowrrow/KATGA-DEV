@@ -32,25 +32,18 @@ const app =
 const db =
   getFirestore(app);
 
-async function loadDashboard() {
+const unitHtml =
+  Object.entries(unitStats)
+    .sort((a, b) => b[1] - a[1])
+    .map(
+      ([unit, count]) => `
+        <div class="card">
+          ${unit}: ${count}
+        </div>
+      `
+    )
+    .join("");
 
-  console.log("Dashboard mulai");
-
-  const snapshot =
-    await getDocs(
-      collection(
-        db,
-        "results"
-      )
-    );
-
-  console.log(
-    "Jumlah dokumen:",
-    snapshot.size
-  );
-
-  ...
-}
 
 async function loadDashboard() {
 
@@ -66,6 +59,18 @@ async function loadDashboard() {
     snapshot.docs.map(
       doc => doc.data()
     );
+
+  const unitStats = {};
+
+results.forEach(result => {
+
+  const unit =
+    result.unit || "Tidak Diketahui";
+
+  unitStats[unit] =
+    (unitStats[unit] || 0) + 1;
+
+});
 
   const totalGames =
     results.length;
@@ -96,9 +101,35 @@ async function loadDashboard() {
         ).toFixed(1)
       : 0;
 
-  document.getElementById(
-    "summary"
-  ).innerHTML = `
+document.getElementById(
+  "summary"
+).innerHTML = `
+
+  <div class="card">
+    Total Game: ${totalGames}
+  </div>
+
+  <div class="card">
+    Pemain Unik: ${uniquePlayers}
+  </div>
+
+  <div class="card">
+    Menang: ${wins}
+  </div>
+
+  <div class="card">
+    Kalah: ${loses}
+  </div>
+
+  <div class="card">
+    Win Rate: ${winRate}%
+  </div>
+
+  <h2>Partisipasi per Unit</h2>
+
+  ${unitHtml}
+
+`;
 
     <div class="card">
       Total Game: ${totalGames}
@@ -133,28 +164,5 @@ document.getElementById(
 
 `;
 
-const unitStats = {};
-
-results.forEach(result => {
-
-  const unit =
-    result.unit || "Tidak Diketahui";
-
-  unitStats[unit] =
-    (unitStats[unit] || 0) + 1;
-
-});
-
-const unitHtml =
-  Object.entries(unitStats)
-    .sort((a, b) => b[1] - a[1])
-    .map(
-      ([unit, count]) => `
-        <div class="card">
-          ${unit}: ${count}
-        </div>
-      `
-    )
-    .join("");
 
 loadDashboard();
