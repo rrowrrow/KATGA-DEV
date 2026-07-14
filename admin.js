@@ -123,4 +123,38 @@ async function loadDashboard() {
   `;
 }
 
+document.getElementById(
+  "summary"
+).innerHTML += `
+
+  <h2>Partisipasi per Unit</h2>
+
+  ${unitHtml}
+
+`;
+
+const unitStats = {};
+
+results.forEach(result => {
+
+  const unit =
+    result.unit || "Tidak Diketahui";
+
+  unitStats[unit] =
+    (unitStats[unit] || 0) + 1;
+
+});
+
+const unitHtml =
+  Object.entries(unitStats)
+    .sort((a, b) => b[1] - a[1])
+    .map(
+      ([unit, count]) => `
+        <div class="card">
+          ${unit}: ${count}
+        </div>
+      `
+    )
+    .join("");
+
 loadDashboard();
