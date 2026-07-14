@@ -192,6 +192,44 @@ const playerHtml =
       "summary"
     ).innerHTML = `
 
+    new Chart(
+
+  document.getElementById(
+    "dailyChart"
+  ),
+
+  {
+
+    type: "bar",
+
+    data: {
+
+      labels:
+        chartLabels,
+
+      datasets: [
+
+        {
+
+          label:
+            "Jumlah Game",
+
+          data:
+            chartValues,
+
+          backgroundColor:
+            "#00529b"
+
+        }
+
+      ]
+
+    }
+
+  }
+
+);
+
       <div class="card">
         Total Game:
         ${totalGames}
