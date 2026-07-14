@@ -26,143 +26,135 @@ const firebaseConfig = {
 
 };
 
-const app =
-  initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const db =
-  getFirestore(app);
-
-const unitHtml =
-  Object.entries(unitStats)
-    .sort((a, b) => b[1] - a[1])
-    .map(
-      ([unit, count]) => `
-        <div class="card">
-          ${unit}: ${count}
-        </div>
-      `
-    )
-    .join("");
-
+const db = getFirestore(app);
 
 async function loadDashboard() {
 
-  const snapshot =
-    await getDocs(
-      collection(
-        db,
-        "results"
-      )
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "results"
+        )
+      );
+
+    const results =
+      snapshot.docs.map(
+        doc => doc.data()
+      );
+
+    const totalGames =
+      results.length;
+
+    const wins =
+      results.filter(
+        r => r.result === "win"
+      ).length;
+
+    const loses =
+      results.filter(
+        r => r.result === "lose"
+      ).length;
+
+    const uniquePlayers =
+      new Set(
+        results.map(
+          r => r.playerId
+        )
+      ).size;
+
+    const winRate =
+      totalGames
+        ? (
+            wins /
+            totalGames *
+            100
+          ).toFixed(1)
+        : 0;
+
+    const unitStats = {};
+
+    results.forEach(result => {
+
+      const unit =
+        result.unit ||
+        "Tidak Diketahui";
+
+      unitStats[unit] =
+        (unitStats[unit] || 0) + 1;
+
+    });
+
+    const unitHtml =
+      Object.entries(unitStats)
+        .sort(
+          (a, b) => b[1] - a[1]
+        )
+        .map(
+          ([unit, count]) => `
+            <div class="card">
+              ${unit}: ${count}
+            </div>
+          `
+        )
+        .join("");
+
+    document.getElementById(
+      "summary"
+    ).innerHTML = `
+
+      <div class="card">
+        Total Game:
+        ${totalGames}
+      </div>
+
+      <div class="card">
+        Pemain Unik:
+        ${uniquePlayers}
+      </div>
+
+      <div class="card">
+        Menang:
+        ${wins}
+      </div>
+
+      <div class="card">
+        Kalah:
+        ${loses}
+      </div>
+
+      <div class="card">
+        Win Rate:
+        ${winRate}%
+      </div>
+
+      <h2>Partisipasi per Unit</h2>
+
+      ${unitHtml}
+
+    `;
+
+  } catch (error) {
+
+    console.error(
+      "DASHBOARD ERROR:",
+      error
     );
 
-  const results =
-    snapshot.docs.map(
-      doc => doc.data()
-    );
+    document.getElementById(
+      "summary"
+    ).innerHTML = `
+      <div class="card">
+        Gagal memuat dashboard.
+      </div>
+    `;
 
-  const unitStats = {};
+  }
 
-results.forEach(result => {
-
-  const unit =
-    result.unit || "Tidak Diketahui";
-
-  unitStats[unit] =
-    (unitStats[unit] || 0) + 1;
-
-});
-
-  const totalGames =
-    results.length;
-
-  const wins =
-    results.filter(
-      r => r.result === "win"
-    ).length;
-
-  const loses =
-    results.filter(
-      r => r.result === "lose"
-    ).length;
-
-  const uniquePlayers =
-    new Set(
-      results.map(
-        r => r.playerId
-      )
-    ).size;
-
-  const winRate =
-    totalGames
-      ? (
-          wins /
-          totalGames *
-          100
-        ).toFixed(1)
-      : 0;
-
-document.getElementById(
-  "summary"
-).innerHTML = `
-
-  <div class="card">
-    Total Game: ${totalGames}
-  </div>
-
-  <div class="card">
-    Pemain Unik: ${uniquePlayers}
-  </div>
-
-  <div class="card">
-    Menang: ${wins}
-  </div>
-
-  <div class="card">
-    Kalah: ${loses}
-  </div>
-
-  <div class="card">
-    Win Rate: ${winRate}%
-  </div>
-
-  <h2>Partisipasi per Unit</h2>
-
-  ${unitHtml}
-
-`;
-
-    <div class="card">
-      Total Game: ${totalGames}
-    </div>
-
-    <div class="card">
-      Pemain Unik: ${uniquePlayers}
-    </div>
-
-    <div class="card">
-      Menang: ${wins}
-    </div>
-
-    <div class="card">
-      Kalah: ${loses}
-    </div>
-
-    <div class="card">
-      Win Rate: ${winRate}%
-    </div>
-
-  `;
 }
-
-document.getElementById(
-  "summary"
-).innerHTML += `
-
-  <h2>Partisipasi per Unit</h2>
-
-  ${unitHtml}
-
-`;
-
 
 loadDashboard();
