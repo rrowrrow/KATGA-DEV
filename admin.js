@@ -82,6 +82,15 @@ async function loadDashboard() {
 
 const dailyStats = {};
 
+    const chartLabels =
+  Object.keys(dailyStats)
+    .sort();
+
+const chartValues =
+  chartLabels.map(
+    date => dailyStats[date]
+  );
+
 results.forEach(result => {
 
   const date =
