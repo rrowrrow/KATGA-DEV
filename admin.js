@@ -9,28 +9,18 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-
-  apiKey: "AIzaSyB-6lfqdfOzqfoDp118bpvi7SmNufTU9Y8",
-
+  apiKey: "AIzaSyB-6lfqdfOzqfoDp118bpvi7SmNufTU9B",
   authDomain: "katga-bd583.firebaseapp.com",
-
   projectId: "katga-bd583",
-
   storageBucket: "katga-bd583.firebasestorage.app",
-
   messagingSenderId: "70271543625",
-
   appId: "1:70271543625:web:f4fa186d5d98391b95d298",
-
   measurementId: "G-QB23BTQYPV"
-
 };
 
-const app =
-  initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const db =
-  getFirestore(app);
+const db = getFirestore(app);
 
 async function loadDashboard() {
 
@@ -240,10 +230,13 @@ async function loadDashboard() {
               {
                 label: "Jumlah Game",
                 data: chartValues,
-                backgroundColor:
-                  "#00529b"
+                backgroundColor: "#00529b"
               }
             ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false
           }
         }
       );
@@ -260,10 +253,10 @@ async function loadDashboard() {
     document.getElementById(
       "summary"
     ).innerHTML = `
-        <div class="card">
-          Gagal memuat dashboard.
-        </div>
-      `;
+      <div class="card">
+        Gagal memuat dashboard.
+      </div>
+    `;
 
   }
 
