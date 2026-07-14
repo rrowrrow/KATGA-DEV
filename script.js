@@ -84,6 +84,15 @@ function bindEvents() {
     }
   });
 
+  document
+  .getElementById(
+    "saveProfileBtn"
+  )
+  ?.addEventListener(
+    "click",
+    saveProfile
+  );
+
   document.addEventListener("keydown", (event) => {
     if (state.popupOpen) return;
     if (state.locked) return;
@@ -209,7 +218,9 @@ state.validGuessSet.add(state.answer);
     updateStatsUI();
     queueStartupHelp();
     processPopupQueue();
-    updateDevPanel();
+checkProfile();
+updateDevPanel();
+   
   } catch (err) {
     console.error(err);
     els.statusLabel.textContent = "Error";
@@ -939,57 +950,86 @@ function escapeHtml(value) {
 
 function getPlayerName() {
 
-  let name =
+  return (
     localStorage.getItem(
       "katga_name"
-    );
-
-  if (!name) {
-
-    name = prompt(
-      "Masukkan Nama Anda"
-    );
-
-    if (name) {
-
-      localStorage.setItem(
-        "katga_name",
-        name
-      );
-
-    }
-
-  }
-
-  return name || "Anonim";
+    ) ||
+    "Anonim"
+  );
 
 }
 
 function getPlayerUnit() {
 
-  let unit =
+  return (
     localStorage.getItem(
       "katga_unit"
+    ) ||
+    "Tidak Diketahui"
+  );
+
+}
+
+function hasProfile() {
+
+  return (
+    localStorage.getItem("katga_name") &&
+    localStorage.getItem("katga_unit")
+  );
+
+}
+
+function checkProfile() {
+
+  if (hasProfile()) {
+    return;
+  }
+
+  document
+    .getElementById("profileModal")
+    .classList.remove("hidden");
+
+}
+
+function saveProfile() {
+
+  const name =
+    document
+      .getElementById("profileName")
+      .value
+      .trim();
+
+  const unit =
+    document
+      .getElementById("profileUnit")
+      .value
+      .trim();
+
+  if (!name || !unit) {
+
+    alert(
+      "Lengkapi profil terlebih dahulu"
     );
 
-  if (!unit) {
-
-    unit = prompt(
-      "Masukkan Unit Anda"
-    );
-
-    if (unit) {
-
-      localStorage.setItem(
-        "katga_unit",
-        unit
-      );
-
-    }
+    return;
 
   }
 
-  return unit || "Tidak Diketahui";
+  localStorage.setItem(
+    "katga_name",
+    name
+  );
+
+  localStorage.setItem(
+    "katga_unit",
+    unit
+  );
+
+  document
+    .getElementById("profileModal")
+    .classList.add("hidden");
+
+  updateDevPanel();
 
 }
 
