@@ -186,28 +186,23 @@ async function loadDashboard() {
     ).innerHTML = `
 
       <div class="card">
-        Total Game:
-        ${totalGames}
+        Total Game: ${totalGames}
       </div>
 
       <div class="card">
-        Pemain Unik:
-        ${uniquePlayers}
+        Pemain Unik: ${uniquePlayers}
       </div>
 
       <div class="card">
-        Menang:
-        ${wins}
+        Menang: ${wins}
       </div>
 
       <div class="card">
-        Kalah:
-        ${loses}
+        Kalah: ${loses}
       </div>
 
       <div class="card">
-        Win Rate:
-        ${winRate}%
+        Win Rate: ${winRate}%
       </div>
 
       <h2>Partisipasi per Unit</h2>
@@ -226,47 +221,34 @@ async function loadDashboard() {
 
       ${topUnitHtml}
 
-      <h2>Grafik Partisipasi Harian</h2>
-
     `;
 
-    new Chart(
-
+    const chartCanvas =
       document.getElementById(
         "dailyChart"
-      ),
+      );
 
-      {
+    if (chartCanvas) {
 
-        type: "bar",
-
-        data: {
-
-          labels:
-            chartLabels,
-
-          datasets: [
-
-            {
-
-              label:
-                "Jumlah Game",
-
-              data:
-                chartValues,
-
-              backgroundColor:
-                "#00529b"
-
-            }
-
-          ]
-
+      new Chart(
+        chartCanvas,
+        {
+          type: "bar",
+          data: {
+            labels: chartLabels,
+            datasets: [
+              {
+                label: "Jumlah Game",
+                data: chartValues,
+                backgroundColor:
+                  "#00529b"
+              }
+            ]
+          }
         }
+      );
 
-      }
-
-    );
+    }
 
   } catch (error) {
 
@@ -278,10 +260,10 @@ async function loadDashboard() {
     document.getElementById(
       "summary"
     ).innerHTML = `
-      <div class="card">
-        Gagal memuat dashboard.
-      </div>
-    `;
+        <div class="card">
+          Gagal memuat dashboard.
+        </div>
+      `;
 
   }
 
