@@ -8,75 +8,98 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const snapshot =
-  await getDocs(
-    collection(
-      db,
-      "results"
-    )
-  );
+const firebaseConfig = {
 
-const results =
-  snapshot.docs.map(
-    doc => doc.data()
-  );
+  apiKey: "AIzaSyB-6lfqdfOzqfoDp118bpvi7SmNufTU9Y8",
 
-const totalGames =
-  results.length;
+  authDomain: "katga-bd583.firebaseapp.com",
 
-const wins =
-  results.filter(
-    r => r.result === "win"
-  ).length;
+  projectId: "katga-bd583",
 
-const loses =
-  results.filter(
-    r => r.result === "lose"
-  ).length;
+  storageBucket: "katga-bd583.firebasestorage.app",
 
-const uniquePlayers =
-  new Set(
-    results.map(
-      r => r.playerId
-    )
-  ).size;
+  messagingSenderId: "70271543625",
 
-const winRate =
-  totalGames
-    ? (
-        wins /
-        totalGames *
-        100
-      ).toFixed(1)
-    : 0;
+  appId: "1:70271543625:web:f4fa186d5d98391b95d298",
 
-document.getElementById(
-  "summary"
-).innerHTML = `
+  measurementId: "G-QB23BTQYPV"
 
-<div class="card">
-  Total Game:
-  ${totalGames}
-</div>
+};
 
-<div class="card">
-  Pemain Unik:
-  ${uniquePlayers}
-</div>
+const app =
+  initializeApp(firebaseConfig);
 
-<div class="card">
-  Menang:
-  ${wins}
-</div>
+const db =
+  getFirestore(app);
 
-<div class="card">
-  Kalah:
-  ${loses}
-</div>
+async function loadDashboard() {
 
-<div class="card">
-  Win Rate:
-  ${winRate}%
-</div>
+  const snapshot =
+    await getDocs(
+      collection(
+        db,
+        "results"
+      )
+    );
 
-`;
+  const results =
+    snapshot.docs.map(
+      doc => doc.data()
+    );
+
+  const totalGames =
+    results.length;
+
+  const wins =
+    results.filter(
+      r => r.result === "win"
+    ).length;
+
+  const loses =
+    results.filter(
+      r => r.result === "lose"
+    ).length;
+
+  const uniquePlayers =
+    new Set(
+      results.map(
+        r => r.playerId
+      )
+    ).size;
+
+  const winRate =
+    totalGames
+      ? (
+          wins /
+          totalGames *
+          100
+        ).toFixed(1)
+      : 0;
+
+  document.getElementById(
+    "summary"
+  ).innerHTML = `
+
+    <div class="card">
+      Total Game: ${totalGames}
+    </div>
+
+    <div class="card">
+      Pemain Unik: ${uniquePlayers}
+    </div>
+
+    <div class="card">
+      Menang: ${wins}
+    </div>
+
+    <div class="card">
+      Kalah: ${loses}
+    </div>
+
+    <div class="card">
+      Win Rate: ${winRate}%
+    </div>
+
+  `;
+}
+
