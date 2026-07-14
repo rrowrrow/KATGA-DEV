@@ -105,6 +105,22 @@ results.forEach(result => {
       `
     )
     .join("");
+
+const topUnitHtml =
+  Object.entries(unitStats)
+    .sort(
+      (a, b) => b[1] - a[1]
+    )
+    .slice(0, 10)
+    .map(
+      ([unit, count], index) => `
+        <div class="card">
+          ${index + 1}. ${unit}
+          (${count} game)
+        </div>
+      `
+    )
+    .join("");
     
     results.forEach(result => {
 
@@ -202,6 +218,14 @@ ${playerHtml}
 <h2>Partisipasi Harian</h2>
 
 ${dailyHtml}
+
+<h2>Partisipasi Harian</h2>
+
+${dailyHtml}
+
+<h2>Top Unit</h2>
+
+${topUnitHtml}
 
     `;
 
