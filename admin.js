@@ -78,6 +78,8 @@ async function loadDashboard() {
 
     const unitStats = {};
 
+    const playerStats = {};
+
     results.forEach(result => {
 
       const unit =
@@ -103,6 +105,37 @@ async function loadDashboard() {
         )
         .join("");
 
+    results.forEach(result => {
+
+  if (result.result !== "win") {
+    return;
+  }
+
+  const player =
+    result.name || "Anonim";
+
+  playerStats[player] =
+    (playerStats[player] || 0) + 1;
+
+});
+
+    
+const playerHtml =
+  Object.entries(playerStats)
+    .sort(
+      (a, b) => b[1] - a[1]
+    )
+    .slice(0, 10)
+    .map(
+      ([player, wins], index) => `
+        <div class="card">
+          ${index + 1}. ${player}
+          (${wins} kemenangan)
+        </div>
+      `
+    )
+    .join("");
+    
     document.getElementById(
       "summary"
     ).innerHTML = `
@@ -135,6 +168,10 @@ async function loadDashboard() {
       <h2>Partisipasi per Unit</h2>
 
       ${unitHtml}
+
+<h2>Top Pemain</h2>
+
+${playerHtml}
 
     `;
 
