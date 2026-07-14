@@ -228,8 +228,6 @@ async function loadDashboard() {
 
       <h2>Grafik Partisipasi Harian</h2>
 
-      <canvas id="dailyChart"></canvas>
-
     `;
 
     new Chart(
